@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 4, from LayoutIt!</title>
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        用户名
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        联系方式
+                    </th>
+                    <th>
+                        地址
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                    <th>
+                        <button type="button" class="btn btn-danger" onclick="javascript:window.location.href='http://localhost:8765/index.html'">
+                            返回
+                        </button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user,memberStat:${users}">
+                    <td th:text="${user.userId}">
+                    </td>
+                    <td th:text="${user.userName}">
+                    </td>
+                    <td th:text="${user.email}">
+                    </td>
+                    <td th:text="${user.phone}">
+                    </td>
+                    <td th:text="${user.address}">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-info" th:onclick="'javascript:showUpdateModal('+${user.userId}+',\''+${user.userName}+'\',\''+${user.password}+'\',\''+${user.email}+'\',\''+${user.phone}+'\',\''+${user.address}+'\');'">
+                            修改
+                        </button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-danger" th:onclick="'javascript:user_delete('+${user.userId}+')'">
+                            删除
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="updateUserModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateUserTitle">user信息更新</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="updateId" class="col-form-label">ID</label>
+                        <input type="text" autofocus class="form-control" id="updateId"  disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateUsername" class="col-form-label">用户名</label>
+                        <input type="text" autofocus class="form-control" id="updateUsername">
+                    </div>
+                    <div class="form-group">
+                        <label for="updatePassword" class="col-form-label">密码</label>
+                        <input type="text" autofocus class="form-control" id="updatePassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateEmail" class="col-form-label">Email</label>
+                        <input type="text" autofocus class="form-control" id="updateEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="updatePhone" class="col-form-label">联系方式</label>
+                        <input type="text" autofocus class="form-control" id="updatePhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateAddress" class="col-form-label">地址</label>
+                        <input type="text" autofocus class="form-control" id="updateAddress">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="updateUseSureBut">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/scripts.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    // 修改弹出框的title, 显示弹框
+    function showUpdateModal(userId,username,password,email,phone,address){
+        $("#updateId").val(userId);
+        $("#updateUsername").val(username);
+        $("#updatePassword").val(password);
+        $("#updateEmail").val(email);
+        $("#updatePhone").val(phone);
+        $("#updateAddress").val(address);
+        $('#updateUserModal').modal('show');
+    }
+    // 关闭弹框， 获取输入值，然后执行逻辑
+    $("#updateUseSureBut").click(function (){
+        var jsonstr = {
+            "userId": $("#updateId").val(),
+            "userName": $("#updateUsername").val(),
+            "password": $("#updatePassword").val(),
+            "email": $("#updateEmail").val(),
+            "phone": $("#updatePhone").val(),
+            "address": $("#updateAddress").val()
+        };
+        var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+        httpRequest.open('PUT', 'http://localhost:8765/api/user', true); //第二步：打开连接/***发送json格式文件必须设置请求头 ；如下 - */
+        httpRequest.setRequestHeader("Content-type", "application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）var obj = { name: 'zhansgan', age: 18 };
+        httpRequest.send(JSON.stringify(jsonstr));//发送请求 将json写入send中
+        /**
+         * 获取数据后的处理程序
+         */
+        httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                var json = httpRequest.responseText;//获取到服务端返回的数据
+                console.log(json);
+                alert("suc");
+                alert(json);
+                location.reload();
+            }
+        };
+        $("#updateUserModal").modal("hide");
+    });
+
+    function user_delete(userId) {
+        if (confirm("确认删除吗？")) {
+            $.ajax({
+                type: 'delete',
+                dataType: 'json',
+                url: '/api/user/' + userId,
+                data: {},
+                cache: false,
+                async: true,
+                success: function (data) {
+                    alert("删除成功");
+                    location.reload();
+                },
+                error: function () {
+                    alert("删除失败，请重试");
+                    location.reload();
+                }
+            });
+        }
+    }
+</script>
+
+</body>
+</html>

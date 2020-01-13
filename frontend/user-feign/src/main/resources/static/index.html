@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 4, from LayoutIt!</title>
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <form role="form" id="form_add" name="form_add" action="/api/user" method="get">
+                <div class="form-group">
+                    <label for="userId">
+                        ID
+                    </label>
+                    <input type="text" class="form-control" id="userId" name="userId">
+                </div>
+                <div class="form-group">
+                    <label for="userName">
+                        用户名
+                    </label>
+                    <input type="text" class="form-control" id="userName" name="userName">
+                </div>
+                <div class="form-group">
+                    <label for="password">
+                        密码
+                    </label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="phone">
+                        联系方式
+                    </label>
+                    <input type="text" class="form-control" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="email">
+                        Email
+                    </label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="address">
+                        地址
+                    </label>
+                    <input type="text" class="form-control" id="address" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="page">
+                        page
+                    </label>
+                    <input type="text" class="form-control" id="page" name="page" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="size">
+                        size
+                    </label>
+                    <input type="text" class="form-control" id="size" name="size" value="10">
+                </div>
+                <button type="submit" class="btn btn-info">
+                    查询
+                </button>
+                <button type="submit" class="btn btn-info" onclick="user_add()">
+                    新增
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+<script>
+    function user_add() {
+        alert("add");
+        var userName = document.getElementById("userName").value;
+        var password = document.getElementById("password").value;
+        var email = document.getElementById("email").value;
+        var phone = document.getElementById("phone").value;
+        var address = document.getElementById("address").value;
+        // var arry = $("#form_add").serializeArray();
+        var arry = {
+            "userName": userName.toString(),
+            "password": password.toString(),
+            "email": email.toString(),
+            "phone": phone.toString(),
+            "address": address.toString()
+        };
+        let s = JSON.stringify(arry);
+        console.log(JSON.stringify(arry));
+        var httpRequest = new XMLHttpRequest();//第一步：创建需要的对象
+        httpRequest.open('POST', 'http://localhost:8765/api/user', true); //第二步：打开连接/***发送json格式文件必须设置请求头 ；如下 - */
+        httpRequest.setRequestHeader("Content-type", "application/json");//设置请求头 注：post方式必须设置请求头（在建立连接后设置请求头）var obj = { name: 'zhansgan', age: 18 };
+        httpRequest.send(JSON.stringify(arry));//发送请求 将json写入send中
+        /**
+         * 获取数据后的处理程序
+         */
+        httpRequest.onreadystatechange = function () {//请求后的回调接口，可将请求成功后要执行的程序写在其中
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {//验证请求是否发送成功
+                var json = httpRequest.responseText;//获取到服务端返回的数据
+                alert(json);
+            }
+        };
+        location.reload();
+    }
+</script>
+</body>
+</html>

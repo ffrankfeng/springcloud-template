@@ -1,0 +1,95 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/${spring.datasource.name}?characterEncoding=utf-8
+    username: root
+    password:
+    name: springcloud-template
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 100
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 30000
+    bySearch.testWhileIdle: true
+    bySearch.timeBetweenEvictionRunsMillis: 3600000
+
+  jooq:
+    sql-dialect: POSTGRES
+
+api:
+  version: v1
+
+server:
+  port: 8767
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+swagger:
+  enabled: true
+  title: springcloud-demo-API
+  description: springcloud-demo的API文档
+  base-package:  com.fengf.demo.springcloud.user.resources
+  base-path: /**
+  exclude-path: /error
+  version: v1
+#swagger:
+#  # 公共信息
+#  enabled: true
+#  title: swagger-demo
+#  description: 一个Swagger测试项目
+#  version: 0.1-SNAPSHOT
+#  # 许可证及服务条款信息
+#  license:
+#  licenseUrl:
+#  termsOfServiceUrl:
+#  contact:
+#    name: Carisma
+#    url:
+#    email: carisma.zhao@gmail.com
+#  base-package: com.fengf.demo.springcloud.user.controller
+
+jwtp:
+  # 0是 redisTokenStore ，1是 jdbcTokenStore ，默认是0
+  store-type: 1
+  # 拦截路径，默认是/**
+  path: /v1/**
+  # 排除拦截路径，默认无
+  exclude-path: /v1/user/login,/swagger-ui.html
+
+  ## 单个用户最大token数，默认-1不限制
+  max-token: 10
+
+  # url自动对应权限方式，0 简易模式，1 RESTful模式
+  # jwtp.url-perm-type=0
+
+  # 自定义查询用户权限的sql
+  # jwtp.find-permissions-sql=SELECT perm FROM user_perm WHERE username = ?
+
+  # 自定义查询用户角色的sql
+  # jwtp.find-roles-sql=SELECT perm FROM user_perm WHERE username = ?
+
+  # 日志级别设置debug可以输出详细信息
+  #logging:
+  #  level: org.wf.jwtp=DEBUG
+
+
+  ## Redis数据库索引（默认为0）
+  #
+  #spring.redis.database=0
+  ## Redis服务器地址
+  #spring.redis.host=106.14.147.163
+  ## Redis服务器连接端口
+  #spring.redis.port=6379
+  ## Redis服务器连接密码（默认为空）
+  #spring.redis.password=
+
