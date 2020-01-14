@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectById(Integer loginUserId) {
+    public User selectById(long loginUserId) {
         List<User> users = userDao.selectById(loginUserId);
         if (users == null)
             return null;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteById(Integer userId) {
+    public boolean deleteById(long userId) {
         return userDao.deleteById(userId) > 0 ;
     }
 

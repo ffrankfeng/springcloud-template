@@ -48,7 +48,7 @@ public class UserDao {
                 .execute();
     }
 
-    public int deleteById(Integer userId) {
+    public int deleteById(long userId) {
         return dslContext.delete(USERS).where(USERS.USERID.eq(userId)).execute();
     }
 
@@ -56,7 +56,7 @@ public class UserDao {
         return dslContext.select().from(USERS).where().limit((page - 1) * size, size).fetch().into(User.class);
     }
 
-    public List<User> selectById(Integer loginUSERSId) {
+    public List<User> selectById(long loginUSERSId) {
         return dslContext.select().from(USERS).where(USERS.USERID.eq(loginUSERSId)).fetch().into(User.class);
     }
 }

@@ -19,12 +19,12 @@ public interface UserFeign {
     public Result<String> add(@RequestParam(value = "userName") String userName,@RequestParam(value = "password") String password,@RequestParam(value = "email") String email,@RequestParam(value = "phone") String phone,@RequestParam(value = "address") String address);
 
 //    @PutMapping("api/user")
-    @RequestMapping(value = "api/user", method = RequestMethod.PUT)
-    public Result<String> update(Integer userId,String userName,String password,String email,String phone,String address);
+    @RequestMapping(value = "api/user/{userId}", method = RequestMethod.PUT)
+    public Result<String> update(@PathVariable("userId")Long userId,@RequestParam(value = "userName") String userName,@RequestParam(value = "password") String password,@RequestParam(value = "email") String email,@RequestParam(value = "phone") String phone,@RequestParam(value = "address") String address);
 
     @PutMapping("api/user/psw")
-    public JsonResult updatePsw(@RequestParam(value = "userId")Integer userId, @RequestParam(value = "oldPsw")String oldPsw, @RequestParam(value = "newPsw")String newPsw, HttpServletRequest request);
+    public JsonResult updatePsw(@RequestParam(value = "userId")Long userId, @RequestParam(value = "oldPsw")String oldPsw, @RequestParam(value = "newPsw")String newPsw, HttpServletRequest request);
 
     @DeleteMapping("api/user/{id}")
-    public Result<String> delete(@PathVariable("id") Integer userId);
+    public Result<String> delete(@PathVariable("id") Long userId);
     }

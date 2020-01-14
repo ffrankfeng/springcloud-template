@@ -95,8 +95,13 @@ public class SnowFlakeUtil {
         return System.currentTimeMillis();
     }
 
-    public static int getID(long datacenterId, long machineId){
+    public static long getID(long datacenterId, long machineId){
+        SnowFlakeUtil snowFlake = new SnowFlakeUtil(datacenterId, machineId);
+        return snowFlake.nextId();
+    }
+
+    public static long getID(){
         SnowFlakeUtil snowFlake = new SnowFlakeUtil(1, 1);
-        return (int) snowFlake.nextId();
+        return snowFlake.nextId();
     }
 }

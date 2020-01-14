@@ -37,6 +37,13 @@ public interface UserResource {
     );
 
     @ApiOperation(value = "添加用户", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "用户名", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "email", value = "Email", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "phone", value = "联系方式", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "address", value = "个人地址", required = true, dataType = "String", paramType = "body")
+    })
     @PostMapping()
     public Result<String> add(
             @RequestParam(value = "userName")
@@ -53,26 +60,40 @@ public interface UserResource {
     );
 
     @ApiOperation(value = "修改用户", notes = "")
-    @PutMapping()
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "userName", value = "用户名", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "email", value = "Email", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "phone", value = "联系方式", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "address", value = "个人地址", required = true, dataType = "String", paramType = "body")
+    })
+    @PutMapping("/{userId}")
     public Result<String> update(
-                    Integer userId,
-                    String userName,
-                    String password,
-                    String email,
-                    String phone,
-                    String address
+            @PathVariable("userId")
+            Long userId,
+            @RequestParam(value = "userName")
+            String userName,
+            @RequestParam(value = "password")
+            String password,
+            @RequestParam(value = "email")
+            String email,
+            @RequestParam(value = "phone")
+            String phone,
+            @RequestParam(value = "address")
+            String address
     );
 
     @ApiOperation(value = "修改自己密码", notes = "")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "用户角色id", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "oldPsw", value = "原密码", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "newPsw", value = "新密码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "oldPsw", value = "原密码", required = true, dataType = "String", paramType = "body"),
+            @ApiImplicitParam(name = "newPsw", value = "新密码", required = true, dataType = "String", paramType = "body"),
     })
     @PutMapping("/psw")
     public JsonResult updatePsw(
             @RequestParam(value = "userId")
-                    Integer userId,
+                    Long userId,
             @RequestParam(value = "oldPsw")
                     String oldPsw,
             @RequestParam(value = "newPsw")
@@ -83,11 +104,11 @@ public interface UserResource {
 
     @ApiOperation(value = "删除用户", notes = "")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "Long", paramType = "path"),
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userId}")
     public Result<String> delete(
-            @PathVariable("id")
-                    Integer userId
+            @PathVariable("userId")
+                    Long userId
     );
 }

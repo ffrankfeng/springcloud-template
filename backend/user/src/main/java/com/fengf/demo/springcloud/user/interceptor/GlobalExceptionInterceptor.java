@@ -1,5 +1,6 @@
 package com.fengf.demo.springcloud.user.interceptor;
 
+import com.fengf.common.exception.ArgsNotValidException;
 import com.fengf.common.pojo.Result;
 import com.sun.org.apache.xalan.internal.xsltc.trax.XSLTCSource;
 import org.springframework.validation.BindException;
@@ -20,19 +21,12 @@ import java.util.List;
  *
  * fengf
  */
-//@ControllerAdvice
-//@ResponseBody
-public class MethodArgumentNotValidExceptionInterceptor {
+@ControllerAdvice
+@ResponseBody
+public class GlobalExceptionInterceptor {
 
-//    @ExceptionHandler(value = BindException.class)
-    public Result<String> exceptionHandler(HttpServletRequest request, Exception e) {
-        String failmsg = "";
-        List<FieldError> fieldErrors = ((BindException) e).getBindingResult().getFieldErrors();
-        for (FieldError error : fieldErrors) {
-            failmsg = failmsg + error.getDefaultMessage() + "|";
-
-        }
-
-        return new Result<String>(1, failmsg + '\b');
+    @ExceptionHandler(value = ArgsNotValidException.class)
+    public Result<String> argsNotValidExceptionHandler(HttpServletRequest request, Exception e) {
+        return new Result<String>(1, "请求参数不合法");
     }
 }

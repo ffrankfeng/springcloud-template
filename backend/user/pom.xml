@@ -61,6 +61,16 @@
             <version>${druid.version}</version>
         </dependency>
 
+        <!--rabbitmq-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!-- swagger -->
         <dependency>
             <groupId>com.spring4all</groupId>

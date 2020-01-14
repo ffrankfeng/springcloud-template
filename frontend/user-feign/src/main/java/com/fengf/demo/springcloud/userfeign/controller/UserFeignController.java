@@ -43,7 +43,7 @@ public class UserFeignController {
 
     @ResponseBody
     @PutMapping("api/user")
-    public String update(@RequestBody  User user){
+    public String update(@RequestBody User user){
         System.out.println("enter update "+ user);
         Result<String> update = userFeign.update(user.getUserId(),user.getUserName(),user.getPassword(),user.getEmail(),user.getPhone(),user.getAddress());
         System.out.println("update result: " + update);
@@ -52,13 +52,14 @@ public class UserFeignController {
 
     @ResponseBody
     @PutMapping("api/user/psw")
-    public JsonResult updatePsw(@RequestParam(value = "userId")Integer userId, @RequestParam(value = "oldPsw")String oldPsw, @RequestParam(value = "newPsw")String newPsw, HttpServletRequest request){
+    public JsonResult updatePsw(@RequestParam(value = "userId")Long userId, @RequestParam(value = "oldPsw")String oldPsw, @RequestParam(value = "newPsw")String newPsw, HttpServletRequest request){
         return userFeign.updatePsw(userId, oldPsw, newPsw, request);
     }
 
     @ResponseBody
     @DeleteMapping("api/user/{id}")
-    public String delete(@PathVariable("id") Integer userId){
+    public String delete(@PathVariable("id")Long userId){
+        System.out.println("idididid  "+userId );
         Result<String> delete = userFeign.delete(userId);
         System.out.println("delete result "+delete.toString());
         return JSON.toJSONString(delete);

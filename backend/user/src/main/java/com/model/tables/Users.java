@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = -716852900;
+    private static final long serialVersionUID = 2115613157;
 
     /**
      * The reference instance of <code>springcloud-template.users</code>
@@ -52,7 +52,7 @@ public class Users extends TableImpl<UsersRecord> {
     /**
      * The column <code>springcloud-template.users.userId</code>.
      */
-    public final TableField<UsersRecord, Integer> USERID = createField("userId", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UsersRecord, Long> USERID = createField("userId", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>springcloud-template.users.userName</code>.

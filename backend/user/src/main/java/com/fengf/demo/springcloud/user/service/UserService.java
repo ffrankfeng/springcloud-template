@@ -11,9 +11,9 @@ public interface UserService {
 
     boolean updateById(User user);
 
-    User selectById(Integer loginUserId);
+    User selectById(long loginUserId);
 
-    boolean deleteById(Integer userId);
+    boolean deleteById(long userId);
 
     List<User> selectByPage(Integer page, Integer size);
 }

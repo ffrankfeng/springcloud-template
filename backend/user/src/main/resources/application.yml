@@ -19,9 +19,15 @@ spring:
     timeBetweenEvictionRunsMillis: 30000
     bySearch.testWhileIdle: true
     bySearch.timeBetweenEvictionRunsMillis: 3600000
-
   jooq:
     sql-dialect: POSTGRES
+
+  rabbitmq:
+  host: 106.14.147.163
+  port: 5672
+  username: fengf
+  password: 970805ff
+
 
 api:
   version: v1

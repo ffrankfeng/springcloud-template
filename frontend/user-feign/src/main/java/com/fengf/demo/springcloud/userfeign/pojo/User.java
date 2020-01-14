@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class User {
 
-    private Integer userId;  // 用户id
+    private Long userId;  // 用户id
 
     @NotNull(message = "传入的userName为null，请传值")
     @NotEmpty(message = "传入的userName为空字符串，请传值")
